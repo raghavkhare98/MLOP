@@ -3,6 +3,7 @@ import marvelcontroller
 import MarvelConn
 import dcconn
 import statistics
+import math
 # from pandas import pd
 
 def collect_data():
@@ -20,6 +21,25 @@ def collect_data():
 Q1. Implement a python code that finds the probability of selection of 2 from Marvel 
 and 3 from DC teams.
 """
+
+def level1_question1(dc, marvel):
+    n = len(marvel)
+    m = len(dc)
+
+    marvel_combinations = math.comb(n, 2)
+    dc_combinations = math.comb(m, 3)
+    total_combinations = math.comb(n + m, 5)
+
+    probability = (marvel_combinations * dc_combinations) / total_combinations
+
+    return {
+        "Marvel Combos (C(n, 2))": marvel_combinations,
+        "DC Combos (C(m, 3))": dc_combinations,
+        "Total Combos (C(n+m, 5))": total_combinations,
+        "Probability": round(probability, 4)
+    }
+
+
 """
 Q2. List all those stars who are heavier than SpiderMan and taller than Henery
 """    
@@ -93,6 +113,12 @@ def level1_question5(dc, marvel):
     dc_obj_insert
     return dcconn.DCConnector().display_dc(), MarvelConn.MarvelConnector().display_marvel()
 
+"""
+Level 2 
+
+Q1 Find Mean and Median of their respective heights, weights and Games played
+
+"""
 
 def level2_question1(dc, marvel):
     
@@ -137,6 +163,50 @@ def level2_question1(dc, marvel):
         'dc': dc_info,
         'marvel': marvel_info
     }
+
+"""
+Q2. Find Deviation and Standard deviation of height and weight
+"""
+
+def level2_question2(dc, marvel):
+    
+    def get_deviation_info(data):
+        height_arr = []
+        weight_arr = []
+
+        for i in data:
+            height_arr.append(i['height'])
+            weight_arr.append(i['weight'])
+        mean_height = sum(height_arr) / len(height_arr)
+        mean_weight = sum(weight_arr) / len(weight_arr)
+
+        mean_dev_height = sum(abs(h - mean_height) for h in height_arr) / len(height_arr)
+        mean_dev_weight = sum(abs(w - mean_weight) for w in weight_arr) / len(weight_arr)
+
+        
+        std_dev_height = statistics.stdev(height_arr)
+        std_dev_weight = statistics.stdev(weight_arr)
+
+        return {
+            'height': {
+                'mean_deviation': mean_dev_height,
+                'std_deviation': std_dev_height
+            },
+            'weight': {
+                'mean_deviation': mean_dev_weight,
+                'std_deviation': std_dev_weight
+            }
+        }
+    
+    dc_stats = get_deviation_info(dc)
+    marvel_stats = get_deviation_info(marvel)
+
+    return {
+        'dc': dc_stats,
+        'marvel': marvel_stats
+    }
+
+        
 
 """
 uncomment this if you want to test
