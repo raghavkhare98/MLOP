@@ -47,4 +47,5 @@ if __name__ == '__main__':
 #TODO: Python script to export csv from the DB
 #TODO: Integrate a NoSQL DB in django settings
 #TODO: Provide different queries/filters using pandas. You can filter and show the products
+#TODO: Implement a service layer for connection of multiple DBs like mysql, and a nosql (mongodb, elasticdb)
 
