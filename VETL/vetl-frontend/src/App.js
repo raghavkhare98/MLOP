@@ -1,21 +1,17 @@
 import './App.css';
-import ResponsiveAppBar from './ResponsiveAppBar';
-import ActionAreaCard from './ActionAreaCard';
-import { useEffect } from 'react';
+import Navbar from './components/Navbar';
+import DataTable from './components/DataTable';
+import GraphsSection from './components/GraphSection';
+
 function App() {
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      window.location.reload();
-    }, 7000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="App">
-      <ResponsiveAppBar />
-      <ActionAreaCard />
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <DataTable />
+        <GraphsSection />
+      </main>
     </div>
   );
 }
