@@ -2,12 +2,11 @@
 // Replace this URL with your Django server URL when ready
 export const API_CONFIG = {
   // Set this to your Django server URL (e.g., 'http://localhost:8000' or 'https://your-django-server.com')
-  BASE_URL: '', // Leave empty to use mock data
+  BASE_URL: 'http://127.0.0.1:8000', // Leave empty to use mock data
   
   // API endpoints
   ENDPOINTS: {
-    DATA: '/api/data/',
-    GRAPHS: '/api/graphs/',
+    DATA: '/product/',
   }
 };
 

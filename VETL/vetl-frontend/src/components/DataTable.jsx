@@ -8,6 +8,13 @@ const DataTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [usingMockData, setUsingMockData] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 20;
+
+  const paginatedData = data.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
   useEffect(() => {
     fetchData();
@@ -68,15 +75,6 @@ const DataTable = () => {
     }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Active': return 'bg-green-100 text-green-800';
-      case 'Inactive': return 'bg-red-100 text-red-800';
-      case 'Pending': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -132,7 +130,7 @@ const DataTable = () => {
         </div>
       )}
       
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto max-h-[500px] overflow-y-scroll">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -140,50 +138,75 @@ const DataTable = () => {
                 ID
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
+                Product Name
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email
+                Category
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Department
+                Mfg Date
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                Expiry Date
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Created
+                Price
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Vendor
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data.map((item, index) => (
+            {paginatedData.map((item, index) => (
               <tr key={item.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors`}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {item.id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{item.name}</div>
-                  {item.role && <div className="text-sm text-gray-500">{item.role}</div>}
+                  <div className="text-sm font-medium text-gray-900">{item.product_name}</div>
+                  {item.product_name && <div className="text-sm text-gray-500">{item.product_name}</div>}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.email}
+                  {item.product_category}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.department || 'N/A'}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(item.status)}`}>
-                    {item.status}
-                  </span>
+                  {item.product_mfg_date}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {item.created}
+                  {item.product_expiry_date}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {item.product_price}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {item.product_vendor}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className="flex justify-end items-center px-6 py-4">
+          <button
+            className="px-4 py-1 mr-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+            onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span className="text-sm text-gray-600">
+            Page {currentPage} of {Math.ceil(data.length / rowsPerPage)}
+          </span>
+          <button
+            className="ml-2 px-4 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+            onClick={() =>
+              setCurrentPage(p => Math.min(p + 1, Math.ceil(data.length / rowsPerPage)))
+            }
+            disabled={currentPage === Math.ceil(data.length / rowsPerPage)}
+          >
+            Next
+          </button>
+        </div>
       </div>
       
       {data.length === 0 && !loading && (

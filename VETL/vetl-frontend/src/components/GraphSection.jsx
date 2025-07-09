@@ -30,16 +30,16 @@ const GraphsSection = () => {
       }
 
       // Try to fetch from Django API
-      const apiUrl = getApiUrl(API_CONFIG.ENDPOINTS.GRAPHS);
-      const response = await axios.get(apiUrl, {
-        timeout: 5000, // 5 second timeout
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
+      // const apiUrl = getApiUrl(API_CONFIG.ENDPOINTS.GRAPHS);
+      // const response = await axios.get(apiUrl, {
+      //   timeout: 5000, // 5 second timeout
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   }
+      // });
       
-      setGraphs(response.data);
-      setUsingMockData(false);
+      // setGraphs(response.data);
+      // setUsingMockData(false);
       
     } catch (err) {
       console.error('Error fetching graphs:', err);
