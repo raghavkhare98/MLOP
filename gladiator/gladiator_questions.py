@@ -1,4 +1,7 @@
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import pandas as pd
+import matplotlib.pyplot as plt
 
 import dccontroller
 import marvelcontroller
@@ -213,11 +216,27 @@ Q3. Perform the necessary operation to find linear regression model of effect of
 """
 
 def level2_question3(dc, marvel):
-    pass
+    
+    dc_df = pd.DataFrame(dc)
+    marvel_df = pd.DataFrame(marvel)
+
+    df = pd.concat([dc_df, marvel_df], ignore_index=True)
+    
+    X, y = df[['weight']], df['games_played']
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    
+    return y_pred
         
 
 """
-uncomment this if you want to test
+uncomment this if you want to test"""
 
 Marveldata=[
         {"name": "IronMan", "height":182, "weight": 90, "games_played": 105},
@@ -234,4 +253,5 @@ dcdata = [
         {"name": "Henery", "height":176, "weight": 87, "games_played": 125},
         {"name": "Heralt", "height":184, "weight": 100, "games_played": 145}
     ]
-"""
+
+print(level2_question3(dcdata, Marveldata))
