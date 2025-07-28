@@ -7,6 +7,7 @@ export const API_CONFIG = {
   // API endpoints
   ENDPOINTS: {
     DATA: '/product/',
+    GRAPHS: '/visualizations/'
   }
 };
 

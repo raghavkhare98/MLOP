@@ -1,10 +1,11 @@
+from sklearn.linear_model import LinearRegression
+
 import dccontroller
 import marvelcontroller
 import MarvelConn
 import dcconn
 import statistics
 import math
-# from pandas import pd
 
 def collect_data():
 
@@ -206,6 +207,13 @@ def level2_question2(dc, marvel):
         'marvel': marvel_stats
     }
 
+"""
+Q3. Perform the necessary operation to find linear regression model of effect of weight on games played 
+(take games played as y and weight as x).
+"""
+
+def level2_question3(dc, marvel):
+    pass
         
 
 """

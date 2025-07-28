@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from product.views import ProductViewset, CustomerViewset, OrderViewset
+from product.views import ProductViewset, CustomerViewset, OrderViewset, product_count_by_category, visualization_router
 
 myList = ProductViewset.as_view(
     {
@@ -43,5 +43,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', myList),
     path('customer/', customerList),
-    path('order/', orderList)
+    path('order/', orderList),
+    path('visualizations/', visualization_router)
 ]

@@ -32,14 +32,13 @@ const DataTable = () => {
           setData(mockTableData);
           setUsingMockData(true);
           setLoading(false);
-        }, 800); // Simulate loading time
+        }, 800);
         return;
       }
 
-      // Try to fetch from Django API
       const apiUrl = getApiUrl(API_CONFIG.ENDPOINTS.DATA);
       const response = await axios.get(apiUrl, {
-        timeout: 5000, // 5 second timeout
+        timeout: 5000,
         headers: {
           'Content-Type': 'application/json',
         }
@@ -57,7 +56,6 @@ const DataTable = () => {
       if (err.code === 'ECONNABORTED') {
         errorMessage = 'Request timed out. Please check if your Django server is running.';
       } else if (err.response) {
-        // Server responded with error status
         errorMessage = `Server error: ${err.response.status} - ${err.response.statusText}`;
       } else if (err.request) {
         // Request was made but no response received
